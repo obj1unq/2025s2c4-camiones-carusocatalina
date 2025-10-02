@@ -1,0 +1,16 @@
+import camion.*
+import cosas.*
+
+describe "Cargando cosas" {
+    
+    test "cargando a bumblebee en camion vacio" {
+        camion.cosas.clear()
+        camion.cargar(bumblebee)
+        assert.equals(camion.cosas.contains(bumblebee), true)
+    }
+
+    test "cargar tambien a knight rider" {
+        
+    }
+
+}
