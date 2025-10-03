@@ -4,13 +4,33 @@ import cosas.*
 describe "Cargando cosas" {
     
     test "cargando a bumblebee en camion vacio" {
-        camion.cosas.clear()
+        camion.cosas().clear()
         camion.cargar(bumblebee)
-        assert.equals(camion.cosas.contains(bumblebee), true)
+        assert.equals(camion.cosas().contains(bumblebee), true)
     }
 
     test "cargar tambien a knight rider" {
-        
+        camion.cargar(bumblebee)
+        camion.cargar(knightRider)
+        assert.equals(true, camion.cosas().contains(bumblebee))
+        assert.equals(true, camion.cosas().contains(knightRider))
     }
 
+    test "camion sin bumblebee" {
+        camion.cargar(bumblebee)
+        camion.cargar(knightRider)
+        assert.equals(true, camion.cosas().contains(bumblebee))
+        camion.descargar(bumblebee)
+        assert.equals(false, camion.cosas().contains(bumblebee))
+    }
+
+    test "imposibilidad de cargar a KR y descargar bumble" {
+        camion.cargar(knightRider)
+        assert.throwsException({ camion.cargar(knightRider) })
+        assert.throwsException({ camion.descargar(bumblebee) })
+    }
+
+    
+
+  
 }
