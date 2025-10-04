@@ -185,3 +185,22 @@ describe "Algo que pese entre x e y" {
         assert.notThat(camion.hayAlgoQuePeseEntre(900, 1000))      
     }
 }
+describe "Cosa mas pesada" {
+    test "camion con x" {
+        camion.cargar(bumblebee)
+        camion.cargar(paqueteDeLadrillos)
+        paqueteDeLadrillos.cantidad(300)
+        assert.equals(bumblebee, camion.cosaMasPesada())
+    }
+    test "camion vacio" {
+        assert.throwsException({ camion.cosaMasPesada() })
+    }
+}
+describe "Pesos (de P = m * g)" {
+    test "camion con bumble y ladrillos"{
+        camion.cargar(bumblebee)
+        camion.cargar(paqueteDeLadrillos)
+        paqueteDeLadrillos.cantidad(300)
+        assert.equals([800, 600], camion.todosLosPesos())
+    }
+}

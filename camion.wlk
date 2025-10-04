@@ -27,9 +27,7 @@ object camion {
 		return cosas.any { el => el.peso() == peso_ }
 	}
 	method pesoDeCarga() {
-		var total = 0
-		cosas.forEach {el => total = total + el.peso()}
-		return total
+		return cosas.sum {el => el.peso()}
 	}
 	method excesoDePeso() {
 		return self.pesoDeCarga() + tara > limiteDePeso
@@ -57,6 +55,19 @@ object camion {
 		return cosas.any({el => el.peso() > minValor && el.peso() < maxValor })
 	}
 
+	method cosaMasPesada() {
+		return cosas.max({el => el.peso()})
+	}
+	method todosLosPesos() {
+		return cosas.map({el => el.peso()})
+	}
+
+	method totalBultos() {
+		return cosas.sum({el => el.bulto()})
+	}
+	method accidente() {
+		cosas.forEach({el => el.accidentado()})
+	}
 	// filter y map devuelven listas 
 	// map por cada elemento devuelve otro
 	// 3 analisis, 1 que devuelve, 2 que va en el predicado
