@@ -6,7 +6,7 @@ describe "Carga y descarga cosas" {
     test "cargando a bumblebee en camion vacio" {
         camion.cosas().clear()
         camion.cargar(bumblebee)
-        assert.equals(camion.cosas().contains(bumblebee), true)
+        assert.that(camion.cosas().contains(bumblebee))
     }
 
     test "cargar tambien a knight rider" {
@@ -46,14 +46,14 @@ describe "Cuestion de peso" { // par y exceso
     test "exceso de peso" {
         camion.cargar(bumblebee)
         paqueteDeLadrillos.cantidad(400)
-        camion.cargar(paqueteDeLadrillos)
-        assert.that(camion.excesoDePeso())
+        camion.cargar(paqueteDeLadrillos) 
+        assert.that(camion.excesoDePeso(camion.limiteDePeso()))
     }
     test "sin excesos" {
         camion.cargar(bumblebee)
         paqueteDeLadrillos.cantidad(300)
         camion.cargar(paqueteDeLadrillos)
-        assert.notThat(camion.excesoDePeso())
+        assert.notThat(camion.excesoDePeso(camion.limiteDePeso()))
     }
 }
 describe "Hay algo que pese x" {

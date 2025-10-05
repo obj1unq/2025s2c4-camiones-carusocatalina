@@ -1,9 +1,12 @@
 import cosas.*
+import transporte.*
+
 
 object camion {
 	const tara = 1000
 	const limiteDePeso = 2500
 	const property cosas = #{}
+	method limiteDePeso() = limiteDePeso
 		
 	method cargar(unaCosa) {
 		if (not cosas.contains(unaCosa))
@@ -29,8 +32,8 @@ object camion {
 	method pesoDeCarga() {
 		return cosas.sum {el => el.peso()}
 	}
-	method excesoDePeso() {
-		return self.pesoDeCarga() + tara > limiteDePeso
+	method excesoDePeso(limite) {
+		return self.pesoDeCarga() + tara > limite
 	}
 
 	method cargaConPeligrosidad(nivelPeligrosidad) {
@@ -45,7 +48,7 @@ object camion {
 	}
 
 	method puedeCircularEnRuta(maxPeligrosidad) {
-		return (not self.excesoDePeso() && self.condicionParaCircularEnRuta(maxPeligrosidad))
+		return (not self.excesoDePeso(limiteDePeso) && self.condicionParaCircularEnRuta(maxPeligrosidad))
 	}
 	method condicionParaCircularEnRuta(maxPeligrosidad) {
 		return not cosas.any({ el => el.nivelPeligrosidad() >= maxPeligrosidad })
@@ -68,9 +71,20 @@ object camion {
 	method accidente() {
 		cosas.forEach({el => el.accidentado()})
 	}
+
+	method enDestino(dest) {
+		dest.agregar(cosas)
+		cosas.removeAll(cosas)
+	}
+	method transportar(destino,camino) {
+		if (camino.puedeCircular(self)) 
+			{self.enDestino(destino)}
+			else {self.error("no puede circular")}
+	}
 	// filter y map devuelven listas 
 	// map por cada elemento devuelve otro
 	// 3 analisis, 1 que devuelve, 2 que va en el predicado
-
+	
 }
+
 
