@@ -9,15 +9,21 @@ object camion {
 	method limiteDePeso() = limiteDePeso
 		
 	method cargar(unaCosa) {
-		if (not cosas.contains(unaCosa))
-			{ cosas.add(unaCosa) }
-		else { self.throwsException() } 
+		self.validarQueNoEstaCargadoCon_(unaCosa)
+		cosas.add(unaCosa)
+		
 	}
-
+	method validarQueNoEstaCargadoCon_(cosa) {
+		if (cosas.contains(cosa))
+			{ self.throwsException() } 
+	}
 	method descargar(unaCosa) {
-		if ( cosas.contains(unaCosa) )
-			{ cosas.remove(unaCosa) }
-		else { self.throwsException() } 
+		self.validarQueEstaCargadoCon_(unaCosa)
+		cosas.remove(unaCosa)
+	}
+	method validarQueEstaCargadoCon_(cosa) {
+		if ( ! cosas.contains(cosa) )
+			{ self.throwsException() } 
 	}
 
 	method todoPesoPar() {
@@ -77,9 +83,13 @@ object camion {
 		cosas.removeAll(cosas)
 	}
 	method transportar(destino,camino) {
-		if (camino.puedeCircular(self)) 
-			{self.enDestino(destino)}
-			else {self.error("no puede circular")}
+		self.validarCaminoParaCircular(camino)
+		self.enDestino(destino)
+	}
+
+	method validarCaminoParaCircular(camino) { // agregado, es bueno usar validar
+		if (! camino.puedeCircular(self))
+			{self.error("no puede circular")}
 	}
 	// filter y map devuelven listas 
 	// map por cada elemento devuelve otro
